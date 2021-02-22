@@ -8,8 +8,12 @@
     "start": "next start -H 0.0.0.0 -p ${PORT:-8080}"
   },
   "dependencies": {
+    "graphql": "^15.5.0",
+    "graphql-request": "^3.4.0",
+    "html-react-parser": "^1.2.4",
     "next": "10.0.6",
     "react": "17.0.1",
+    "react-datocms": "^1.5.3",
     "react-dom": "17.0.1"
   }
 }
