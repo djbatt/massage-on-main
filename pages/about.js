@@ -27,8 +27,6 @@ export async function getServerSideProps() {
     variables: { limit: 10 },
   });
 
-  console.log(data);
-
   // Pass data to the page via props
   return { props: { data } };
 }

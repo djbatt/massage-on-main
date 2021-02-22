@@ -1,5 +1,5 @@
 import { request } from "../lib/datocms";
-import { Image } from "react-datocms";
+import { Image, renderMetaTags } from "react-datocms";
 import Head from "next/head";
 
 const HOMEPAGE_QUERY = `query {
@@ -16,6 +16,18 @@ const HOMEPAGE_QUERY = `query {
         base64
       }
     }
+    seo: _seoMetaTags {
+      attributes
+      content
+      tag
+    }
+  }
+  site: _site {
+    favicon: faviconMetaTags {
+      attributes
+      content
+      tag
+    }
   }
 }
 `;
@@ -25,9 +37,9 @@ function Page({ data }) {
   return (
     <div>
       <Head>
-        <title>Massage On Main</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="icon" href="/favicon.ico" />
+        
+        {renderMetaTags(data.page.seo.concat(data.site.favicon))}
       </Head>
       <Image data={data.page.banner.responsiveImage} />
       <h1>{data.page.bannerText}</h1>
@@ -42,7 +54,7 @@ export async function getServerSideProps() {
     variables: { limit: 10 },
   });
 
-  console.log(data, "data");
+  console.log(data);
 
   // Pass data to the page via props
   return { props: { data } };
