@@ -1,8 +1,13 @@
 import { request } from "../lib/datocms";
 import { Image, renderMetaTags } from "react-datocms";
+import parse from "html-react-parser";
 import Head from "next/head";
 
-const HOMEPAGE_QUERY = `query {
+//Components
+import Header from "../components/header";
+import Banner from '../components/banner';
+
+const QUERY = `query {
   page(filter: {id: {eq: "21725734"}}) {
     bannerText
     id
@@ -38,11 +43,16 @@ function Page({ data }) {
     <div>
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        
         {renderMetaTags(data.page.seo.concat(data.site.favicon))}
       </Head>
-      <Image data={data.page.banner.responsiveImage} />
-      <h1>{data.page.bannerText}</h1>
+
+      <Header />
+
+      <main>
+        <Banner data={data.page.banner.responsiveImage} />
+        <h1>{data.page.bannerText}</h1>
+        {parse(data.page.summary)}
+      </main>
     </div>
   );
 }
@@ -50,11 +60,9 @@ function Page({ data }) {
 // This gets called on every request
 export async function getServerSideProps() {
   const data = await request({
-    query: HOMEPAGE_QUERY,
+    query: QUERY,
     variables: { limit: 10 },
   });
-
-  console.log(data);
 
   // Pass data to the page via props
   return { props: { data } };
