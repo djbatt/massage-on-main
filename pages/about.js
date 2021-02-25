@@ -34,6 +34,13 @@ const QUERY = `query {
       tag
     }
   }
+  upload(filter: {id: {eq: "8642857"}}) {
+    responsiveImage {
+      alt
+      src
+      srcSet
+    }
+  }
 }
 `;
 
@@ -43,10 +50,11 @@ function Page({ data }) {
     <div>
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link rel="stylesheet" href="https://use.typekit.net/zvd5hlr.css"></link>
         {renderMetaTags(data.page.seo.concat(data.site.favicon))}
       </Head>
 
-      <Header />
+      <Header logo={data.upload.responsiveImage}/>
 
       <main>
         <Banner data={data.page.banner.responsiveImage} />

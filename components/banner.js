@@ -4,7 +4,6 @@ import styled from "styled-components";
 const Banner = styled(Image)`
     height: 400px;
     object-fit: cover;
-
     > picture > img {
         object-fit: cover;
     }
