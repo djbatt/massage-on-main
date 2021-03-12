@@ -35,6 +35,7 @@ const BookingButton = styled.a`
 const Nav = styled.nav`
   @media only screen and (max-width: 992px) {
     display: ${(props) => (props.toggled ? "flex" : "none")};
+    overflow: auto;
     position: absolute;
     left: 0;
     top: 0;
