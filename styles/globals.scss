@@ -21,3 +21,15 @@ a {
 * {
   box-sizing: border-box;
 }
+
+//Mobile Nav
+.hamburger-react {
+  display: none;
+  @media only screen and (max-width: 992px) {
+    display: block;
+    position: absolute!important;
+    right: 20px;
+    top: 25px;
+    z-index: 2;
+  }
+}

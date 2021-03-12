@@ -2,7 +2,7 @@ import { Image } from "react-datocms";
 import styled from "styled-components";
 
 const Banner = styled(Image)`
-    height: 400px;
+    height: 500px;
     object-fit: cover;
     > picture > img {
         object-fit: cover;
