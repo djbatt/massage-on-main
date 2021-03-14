@@ -41,7 +41,7 @@ const Nav = styled.nav`
     top: 0;
     width: 100vw;
     min-height: 100vh;
-    height: -webkit-fill-available;
+    min-height: -webkit-fill-available;
     background-color: ${(props) => props.theme.background};
     z-index: 1;
     flex-direction: column;
