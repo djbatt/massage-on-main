@@ -35,12 +35,13 @@ const BookingButton = styled.a`
 const Nav = styled.nav`
   @media only screen and (max-width: 992px) {
     display: ${(props) => (props.toggled ? "flex" : "none")};
-    overflow: auto;
+    overflow: visible;
     position: absolute;
     left: 0;
     top: 0;
     width: 100vw;
     height: 100vh;
+    height: -webkit-fill-available;
     background-color: ${(props) => props.theme.background};
     z-index: 1;
     flex-direction: column;
