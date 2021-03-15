@@ -13,6 +13,10 @@ const Header = styled.header`
   justify-content: space-between;
   box-shadow: 0 12.5px 10px rgba(0, 0, 0, 0.035),
     0 100px 80px rgba(0, 0, 0, 0.07);
+  @media only screen and (max-width: 992px) {
+    flex-direction: column;
+    height: ${(props) => (props.toggled ? "100vh" : "auto")};
+  }
 `;
 
 const Logo = styled(Image)`
@@ -36,12 +40,8 @@ const Nav = styled.nav`
   @media only screen and (max-width: 992px) {
     display: ${(props) => (props.toggled ? "flex" : "none")};
     overflow: scroll;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
+    width: 100%;
+    height: 100%;
     background-color: ${(props) => props.theme.background};
     z-index: 1;
     flex-direction: column;
@@ -53,7 +53,6 @@ const MenuList = styled.ul`
   padding-left: 0;
   list-style: none;
   display: flex;
-  height: 100%;
   margin: 0;
   > li {
     font-weight: bold;
@@ -67,16 +66,12 @@ const MenuList = styled.ul`
   @media only screen and (max-width: 992px) {
     flex-direction: column;
     z-index: 1;
-    padding-top: 100px;
-    top: 100px;
-    width: 100vw;
-    height: fit-content;
-    left: 0;
+    width: 100%;
     background-color: ${(props) => props.theme.background};
     > li {
       margin-top: 12px;
       margin-bottom: 12px;
-      margin-left: 20px;
+      margin-left: 0px;
       flex-direction: column;
     }
   }
@@ -84,6 +79,8 @@ const MenuList = styled.ul`
 
 const ContactInfo = styled.ul`
   padding-left: 0;
+  margin-top: 0px;
+  margin-bottom: 0px;
   list-style: none;
   display: none;
   > li {
@@ -94,7 +91,6 @@ const ContactInfo = styled.ul`
   @media only screen and (max-width: 992px) {
     flex-direction: column;
     display: flex;
-    margin-left: 20px;
   }
 `;
 
@@ -110,14 +106,14 @@ function header(props) {
 
   useEffect(() => {
     if (isOpen === false) {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "unset";
     } else {
       document.body.style.overflow = "hidden";
     }
   }, [isOpen]);
   // Render data...
   return (
-    <Header>
+    <Header toggled={isOpen}>
       <Link href="/" passHref>
         <Logo data={props.logo} />
       </Link>
