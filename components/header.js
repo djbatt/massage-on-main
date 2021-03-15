@@ -42,6 +42,7 @@ const Nav = styled.nav`
     overflow: scroll;
     width: 100%;
     height: 100%;
+    height: -webkit-fill-available;
     background-color: ${(props) => props.theme.background};
     z-index: 1;
     flex-direction: column;
