@@ -16,6 +16,7 @@ const Header = styled.header`
   @media only screen and (max-width: 992px) {
     flex-direction: column;
     height: ${(props) => (props.toggled ? "100vh" : "auto")};
+    height: ${(props) => (props.toggled ? "-webkit-fill-available" : "auto")};
   }
 `;
 
@@ -37,12 +38,14 @@ const BookingButton = styled.a`
 `;
 
 const Nav = styled.nav`
+  flex-direction: column;
+  justify-content: center;
+  display: flex;
   @media only screen and (max-width: 992px) {
     display: ${(props) => (props.toggled ? "flex" : "none")};
     overflow: scroll;
     width: 100%;
     height: 100%;
-    height: -webkit-fill-available;
     background-color: ${(props) => props.theme.background};
     z-index: 1;
     flex-direction: column;
