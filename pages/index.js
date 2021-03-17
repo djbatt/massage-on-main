@@ -47,7 +47,7 @@ const QUERY = `query {
 function Page({ data }) {
   // Render data...
   return (
-    <div>
+    <>
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link rel="stylesheet" href="https://use.typekit.net/zvd5hlr.css"></link>
@@ -61,7 +61,7 @@ function Page({ data }) {
         <h1>{data.page.bannerText}</h1>
         {parse(data.page.summary)}
       </main>
-    </div>
+    </>
   );
 }
 

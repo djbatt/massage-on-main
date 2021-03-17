@@ -16,7 +16,6 @@ const Header = styled.header`
   @media only screen and (max-width: 992px) {
     flex-direction: column;
     height: ${(props) => (props.toggled ? "100vh" : "auto")};
-    height: ${(props) => (props.toggled ? "-webkit-fill-available" : "auto")};
   }
 `;
 
@@ -49,7 +48,7 @@ const Nav = styled.nav`
     background-color: ${(props) => props.theme.background};
     z-index: 1;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: start;
   }
 `;
 
@@ -93,6 +92,7 @@ const ContactInfo = styled.ul`
   }
 
   @media only screen and (max-width: 992px) {
+    margin-top: 20px;
     flex-direction: column;
     display: flex;
   }
@@ -125,6 +125,7 @@ function header(props) {
         toggled={isOpen}
         toggle={setOpen}
         label="Page Navigation Menu"
+        color="#272727"
       />
       <Nav toggled={isOpen}>
         <MenuList>
