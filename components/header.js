@@ -97,6 +97,9 @@ const ContactInfo = styled.ul`
   > li {
     margin-top: 6px;
     margin-bottom: 6px;
+    > a {
+      font-size: 20px;
+    }
   }
 
   @media only screen and (max-width: 992px) {

@@ -35,7 +35,6 @@ const QUERY = `query {
         title
       }
     }
-    
     serviceThree {
       responsiveImage {
         alt
@@ -53,14 +52,17 @@ const QUERY = `query {
       tag
     }
   }
-  upload(filter: {id: {eq: "8642857"}}) {
+  allUploads(filter: {id: {in: ["8642857", "10631945"]}}) {
+    id
     responsiveImage {
       alt
       src
       srcSet
+      title
     }
   }
 }
+
 `;
 
 import { request } from "../lib/datocms";
@@ -73,6 +75,7 @@ import styled from "styled-components";
 import Header from "../components/header";
 import Banner from "../components/banner";
 import ServiceCard from "../components/serviceCard";
+import Footer from "../components/footer";
 
 const Container = styled.div`
   max-width: 1000px;
@@ -101,17 +104,27 @@ const BannerText = styled.h1`
 
 const FlexGrid = styled.div`
   display: flex;
-  column-gap: 1rem;
   flex-wrap: wrap;
   & > div {
     background-color: ${(props) => props.theme.brandBlue};
+    display: flex;
     position: relative;
     height: 309px;
     flex: 1;
     min-width: 300px;
+    margin-left: 8px;
+    margin-right: 8px;
     margin-bottom: 16px;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   }
+`;
+
+const ServiceTitle = styled.span`
+  color: ${(props) => props.theme.background};
+  text-align: center;
+  z-index: 1;
+  position: relative;
+  margin: auto;
 `;
 
 function Page({ data }) {
@@ -127,7 +140,7 @@ function Page({ data }) {
         {renderMetaTags(data.page.seo.concat(data.site.favicon))}
       </Head>
 
-      <Header logo={data.upload.responsiveImage} />
+      <Header logo={data.allUploads.filter(upload => upload.id === "8642857")[0].responsiveImage} />
 
       <main>
         <Banner data={data.page.banner.responsiveImage} />
@@ -139,16 +152,26 @@ function Page({ data }) {
           <FlexGrid>
             <div>
               <ServiceCard data={data.page.serviceOne.responsiveImage} />
+              <ServiceTitle className="trajan">
+                {data.page.serviceOne.responsiveImage.title}
+              </ServiceTitle>
             </div>
             <div>
               <ServiceCard data={data.page.serviceTwo.responsiveImage} />
+              <ServiceTitle className="trajan">
+                {data.page.serviceTwo.responsiveImage.title}
+              </ServiceTitle>
             </div>
             <div>
               <ServiceCard data={data.page.serviceThree.responsiveImage} />
+              <ServiceTitle className="trajan">
+                {data.page.serviceThree.responsiveImage.title}
+              </ServiceTitle>
             </div>
           </FlexGrid>
         </Container>
       </main>
+      <Footer logo={data.allUploads.filter(upload => upload.id === "10631945")[0].responsiveImage} />
     </>
   );
 }
@@ -160,6 +183,7 @@ export async function getServerSideProps() {
     variables: { limit: 10 },
   });
 
+  console.log(data.allUploads, "test");
 
   // Pass data to the page via props
   return { props: { data } };
