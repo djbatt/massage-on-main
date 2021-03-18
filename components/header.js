@@ -6,13 +6,21 @@ import { useState, useEffect } from "react";
 
 const Header = styled.header`
   width: 100%;
-  padding: 20px;
-  height: fit-content;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  background-color: ${(props) => props.theme.background};
+  @media only screen and (max-width: 992px) {
+    flex-direction: column;
+  }
+`;
+
+const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  box-shadow: 0 12.5px 10px rgba(0, 0, 0, 0.035),
-    0 100px 80px rgba(0, 0, 0, 0.07);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
   @media only screen and (max-width: 992px) {
     flex-direction: column;
     height: ${(props) => (props.toggled ? "100vh" : "auto")};
@@ -118,60 +126,62 @@ function header(props) {
   // Render data...
   return (
     <Header toggled={isOpen}>
-      <Link href="/" passHref>
-        <Logo data={props.logo} />
-      </Link>
-      <Hamburger
-        toggled={isOpen}
-        toggle={setOpen}
-        label="Page Navigation Menu"
-        color="#272727"
-      />
-      <Nav toggled={isOpen}>
-        <MenuList>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/about">About</Link>
-          </li>
-          <li>
-            <Link href="/common-questions">Common Questions</Link>
-          </li>
-          <li>
-            <Link href="/contact">Contact</Link>
-          </li>
-          <li>
-            <Link href="/gift-cards">Gift Cards</Link>
-          </li>
-          <li>
-            <Link href="/contact">Services</Link>
-          </li>
-          <li>
-            <BookingButton
-              href="https://square.site/book/LH466QXPEW2KV/massage-on-main-llc-richmond-va"
-              target="_blank"
-            >
-              Booking
-            </BookingButton>
-          </li>
-        </MenuList>
-        <ContactInfo>
-          <Spacer />
-          <li>
-            <a href="tel:+18044242607">(804) 424-2607</a>
-          </li>
-          <li>
-            <span>Anthony@massageonmainrva.com</span>
-          </li>
-          <li>
-            <span>2602 West Main St.</span>
-          </li>
-          <li>
-            <span>Richmond, Virginia 23220</span>
-          </li>
-        </ContactInfo>
-      </Nav>
+      <Container toggled={isOpen}>
+        <Link href="/" passHref>
+          <Logo data={props.logo} />
+        </Link>
+        <Hamburger
+          toggled={isOpen}
+          toggle={setOpen}
+          label="Page Navigation Menu"
+          color="#272727"
+        />
+        <Nav toggled={isOpen}>
+          <MenuList>
+            <li>
+              <Link href="/">Home</Link>
+            </li>
+            <li>
+              <Link href="/about">About</Link>
+            </li>
+            <li>
+              <Link href="/common-questions">Common Questions</Link>
+            </li>
+            <li>
+              <Link href="/contact">Contact</Link>
+            </li>
+            <li>
+              <Link href="/gift-cards">Gift Cards</Link>
+            </li>
+            <li>
+              <Link href="/contact">Services</Link>
+            </li>
+            <li>
+              <BookingButton
+                href="https://square.site/book/LH466QXPEW2KV/massage-on-main-llc-richmond-va"
+                target="_blank"
+              >
+                Booking
+              </BookingButton>
+            </li>
+          </MenuList>
+          <ContactInfo>
+            <Spacer />
+            <li>
+              <a href="tel:+18044242607">(804) 424-2607</a>
+            </li>
+            <li>
+              <span>Anthony@massageonmainrva.com</span>
+            </li>
+            <li>
+              <span>2602 West Main St.</span>
+            </li>
+            <li>
+              <span>Richmond, Virginia 23220</span>
+            </li>
+          </ContactInfo>
+        </Nav>
+      </Container>
     </Header>
   );
 }

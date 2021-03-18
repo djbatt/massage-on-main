@@ -2,10 +2,11 @@ import { request } from "../lib/datocms";
 import { Image, renderMetaTags } from "react-datocms";
 import parse from "html-react-parser";
 import Head from "next/head";
+import styled from "styled-components";
 
 //Components
 import Header from "../components/header";
-import Banner from '../components/banner';
+import Banner from "../components/banner";
 
 const QUERY = `query {
   page(filter: {id: {eq: "21725734"}}) {
@@ -44,22 +45,57 @@ const QUERY = `query {
 }
 `;
 
+const Container = styled.div`
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+`;
+
+const BannerCard = styled.div`
+  background-color: ${(props) => props.theme.brandBlue};
+  padding: 20px;
+  margin-top: -80px;
+  display: flex;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+  z-index: 1;
+  position: relative;
+  color: ${(props) => props.theme.background};
+  justify-content: center;
+  flex-direction: row;
+`;
+
+const BannerText = styled.h1`
+  font-size: 22px;
+  text-align: center;
+`;
+
+const Paragraph = styled.p`
+`;
+
 function Page({ data }) {
   // Render data...
   return (
     <>
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="stylesheet" href="https://use.typekit.net/zvd5hlr.css"></link>
+        <link
+          rel="stylesheet"
+          href="https://use.typekit.net/zvd5hlr.css"
+        ></link>
         {renderMetaTags(data.page.seo.concat(data.site.favicon))}
       </Head>
 
-      <Header logo={data.upload.responsiveImage}/>
+      <Header logo={data.upload.responsiveImage} />
 
       <main>
         <Banner data={data.page.banner.responsiveImage} />
-        <h1>{data.page.bannerText}</h1>
-        {parse(data.page.summary)}
+        <Container>
+          <BannerCard>
+            <BannerText className="trajan">{data.page.bannerText}</BannerText>
+          </BannerCard>
+          {parse(data.page.summary)}
+        </Container>
       </main>
     </>
   );
