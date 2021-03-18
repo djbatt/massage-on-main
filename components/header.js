@@ -134,7 +134,7 @@ function header(props) {
           toggled={isOpen}
           toggle={setOpen}
           label="Page Navigation Menu"
-          color="#272727"
+          color="#158ba8"
         />
         <Nav toggled={isOpen}>
           <MenuList>
