@@ -1,8 +1,170 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { Image } from "react-datocms";
 import { Instagram, FacebookSquare } from "@styled-icons/boxicons-logos";
+import { Parking, MapPin } from "@styled-icons/fa-solid";
+
 import GoogleMapReact from "google-map-react";
+
+const mapStyles = [
+    {
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#f5f5f5"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.icon",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#616161"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#f5f5f5"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative.land_parcel",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#bdbdbd"
+        }
+      ]
+    },
+    {
+      "featureType": "poi",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#eeeeee"
+        }
+      ]
+    },
+    {
+      "featureType": "poi",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#757575"
+        }
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#e5e5e5"
+        }
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#9e9e9e"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#ffffff"
+        }
+      ]
+    },
+    {
+      "featureType": "road.arterial",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#757575"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#dadada"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#616161"
+        }
+      ]
+    },
+    {
+      "featureType": "road.local",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#9e9e9e"
+        }
+      ]
+    },
+    {
+      "featureType": "transit.line",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#e5e5e5"
+        }
+      ]
+    },
+    {
+      "featureType": "transit.station",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#eeeeee"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#c9c9c9"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#9e9e9e"
+        }
+      ]
+    }
+  ]
 
 const Footer = styled.footer`
   display: flex;
@@ -13,7 +175,7 @@ const Footer = styled.footer`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 1200px;
+  max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
   padding: 20px;
@@ -32,17 +194,6 @@ const FlexGrid = styled.div`
     margin-bottom: 16px;
     margin-left: 8px;
     margin-right: 8px;
-  }
-`;
-
-const Logo = styled(Image)`
-  height: 60px;
-  width: 162px;
-  flex-shrink: 0;
-  margin-bottom: 52px;
-  z-index: 2;
-  > picture > img {
-    object-fit: contain;
   }
 `;
 
@@ -86,12 +237,38 @@ const SocialRow = styled.div`
 const LegalRow = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content-center
+  justify-content-center;
 `;
 
 const LegalText = styled.span`
   font-size: 12px;
 `;
+
+const Pin = styled(MapPin)`
+  color: ${(props) => props.theme.brandBlue};
+  width: 12px;
+`;
+
+const PinParking = styled(Parking)`
+  color: ${(props) => props.theme.brandBlue};
+  width: 16px;
+`;
+
+function createMapOptions(maps) {
+  // next props are exposed at maps
+  // "Animation", "ControlPosition", "MapTypeControlStyle", "MapTypeId",
+  // "NavigationControlStyle", "ScaleControlStyle", "StrokePosition", "SymbolPath", "ZoomControlStyle",
+  // "DirectionsStatus", "DirectionsTravelMode", "DirectionsUnitSystem", "DistanceMatrixStatus",
+  // "DistanceMatrixElementStatus", "ElevationStatus", "GeocoderLocationType", "GeocoderStatus", "KmlLayerStatus",
+  // "MaxZoomStatus", "StreetViewStatus", "TransitMode", "TransitRoutePreference", "TravelMode", "UnitSystem"
+  return {
+    panControl: false,
+    mapTypeControl: false,
+    scrollwheel: false,
+    styles: mapStyles,
+  };
+}
+
 // Render data...
 
 function footer(props) {
@@ -100,7 +277,15 @@ function footer(props) {
       lat: 37.552256078496825,
       lng: -77.473304844577,
     },
-    zoom: 16,
+    parking: {
+      lat: 37.55213699723793,
+      lng: -77.4724733598262,
+    },
+    business: {
+      lat: 37.55230179714384,
+      lng: -77.47341347403636,
+    },
+    zoom: 17,
     apiKey: process.env.MAPS_API_KEY,
   };
 
@@ -108,23 +293,8 @@ function footer(props) {
     <Footer>
       <Container>
         <FlexGrid>
-          <div style={{ minHeight: "300px" }}>
-            <FooterHeading>Locate Us</FooterHeading>
-            <GoogleMapReact
-              bootstrapURLKeys={{
-                key: mapData.apiKey,
-                language: "en",
-              }}
-              defaultCenter={mapData.center}
-              defaultZoom={mapData.zoom}
-            ></GoogleMapReact>
-          </div>
           <div>
-            <FooterHeading>Business Hours</FooterHeading>
-            <Hours>MON-FRI: 9AM - 10PM</Hours>
-            <Hours>SAT-SUN: 10AM - 7PM</Hours>
-          </div>
-          <div>
+            <FooterHeading>Site Map</FooterHeading>
             <MenuList>
               <li>
                 <Link href="/">Home</Link>
@@ -156,10 +326,37 @@ function footer(props) {
               </li>
             </MenuList>
           </div>
+          <div style={{ minHeight: "300px" }}>
+            <FooterHeading>Locate Us</FooterHeading>
+            <Hours>
+              Massage On Main is located at 2602 W Main St. You can find extra
+              parking in the alleyway behind Main St and N Robinson St. Look for
+              the cement parking lot.
+            </Hours>
+            <FooterHeading>Business Hours</FooterHeading>
+            <Hours>MON-FRI: 9AM - 10PM</Hours>
+            <Hours>SAT-SUN: 10AM - 7PM</Hours>
+          </div>
+          <div>
+            <GoogleMapReact
+              bootstrapURLKeys={"AIzaSyCLo1g8znFtrQg-UovgeyOxIH4ZqzkddHI"}
+              defaultCenter={mapData.center}
+              defaultZoom={mapData.zoom}
+              options={createMapOptions}
+            >
+              <div lat={mapData.business.lat} lng={mapData.business.lng}>
+                <Pin />
+              </div>
+              <div lat={mapData.parking.lat} lng={mapData.parking.lng}>
+                <PinParking />
+              </div>
+            </GoogleMapReact>
+          </div>
         </FlexGrid>
         <LegalRow>
           <LegalText>
-                <Link href="/privacy-policy">Privacy Policy</Link> | © {new Date().getFullYear()} Massage On Main LLC
+            <Link href="/privacy-policy">Privacy Policy</Link> | ©{" "}
+            {new Date().getFullYear()} Massage On Main LLC
           </LegalText>
         </LegalRow>
       </Container>
