@@ -12,6 +12,7 @@ const Footer = styled.footer`
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
@@ -82,25 +83,37 @@ const SocialRow = styled.div`
   }
 `;
 
+const LegalRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content-center
+`;
+
+const LegalText = styled.span`
+  font-size: 12px;
+`;
+// Render data...
+
 function footer(props) {
-  // Render data...
-  var mapData = {
+  const mapData = {
     center: {
       lat: 37.552256078496825,
       lng: -77.473304844577,
     },
-    zoom: 11,
+    zoom: 16,
+    apiKey: process.env.MAPS_API_KEY,
   };
 
   return (
     <Footer>
       <Container>
         <FlexGrid>
-          <div style={{ minHeight: "300px"}}>
+          <div style={{ minHeight: "300px" }}>
             <FooterHeading>Locate Us</FooterHeading>
             <GoogleMapReact
               bootstrapURLKeys={{
-                key: process.env.MAPS_API_KEY,
+                key: mapData.apiKey,
+                language: "en",
               }}
               defaultCenter={mapData.center}
               defaultZoom={mapData.zoom}
@@ -132,9 +145,6 @@ function footer(props) {
                 <Link href="/contact">Services</Link>
               </li>
               <li>
-                <Link href="/privacy-policy">Privacy Policy</Link>
-              </li>
-              <li>
                 <SocialRow>
                   <a href="#">
                     <FacebookSquare />
@@ -147,6 +157,11 @@ function footer(props) {
             </MenuList>
           </div>
         </FlexGrid>
+        <LegalRow>
+          <LegalText>
+                <Link href="/privacy-policy">Privacy Policy</Link> | © {new Date().getFullYear()} Massage On Main LLC
+          </LegalText>
+        </LegalRow>
       </Container>
     </Footer>
   );
