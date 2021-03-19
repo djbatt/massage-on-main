@@ -183,7 +183,6 @@ export async function getServerSideProps() {
     variables: { limit: 10 },
   });
 
-  console.log(data.allUploads, "test");
 
   // Pass data to the page via props
   return { props: { data } };

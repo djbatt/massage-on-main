@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { Image } from "react-datocms";
-import { Loader } from "@googlemaps/js-api-loader";
+import { Instagram, FacebookSquare } from "@styled-icons/boxicons-logos";
+import GoogleMapReact from "google-map-react";
 
 const Footer = styled.footer`
   display: flex;
@@ -71,24 +72,44 @@ const Hours = styled.span`
   margin-bottom: 6px;
 `;
 
+const SocialRow = styled.div`
+  display: flex;
+  a {
+    ${Instagram}, ${FacebookSquare} {
+      color: ${(props) => props.theme.brandBlue};
+      width: 36px;
+    }
+  }
+`;
+
 function footer(props) {
   // Render data...
+  var mapData = {
+    center: {
+      lat: 37.552256078496825,
+      lng: -77.473304844577,
+    },
+    zoom: 11,
+  };
+
   return (
     <Footer>
       <Container>
         <FlexGrid>
-          <div>
+          <div style={{ minHeight: "300px"}}>
             <FooterHeading>Locate Us</FooterHeading>
+            <GoogleMapReact
+              bootstrapURLKeys={{
+                key: process.env.MAPS_API_KEY,
+              }}
+              defaultCenter={mapData.center}
+              defaultZoom={mapData.zoom}
+            ></GoogleMapReact>
           </div>
           <div>
             <FooterHeading>Business Hours</FooterHeading>
-            <Hours>
-                MON-FRI: 9AM - 10PM
-            </Hours>
-            <Hours>
-                SAT-SUN: 10AM - 7PM
-            </Hours>
-            <FooterHeading>Reach Out</FooterHeading>
+            <Hours>MON-FRI: 9AM - 10PM</Hours>
+            <Hours>SAT-SUN: 10AM - 7PM</Hours>
           </div>
           <div>
             <MenuList>
@@ -112,6 +133,16 @@ function footer(props) {
               </li>
               <li>
                 <Link href="/privacy-policy">Privacy Policy</Link>
+              </li>
+              <li>
+                <SocialRow>
+                  <a href="#">
+                    <FacebookSquare />
+                  </a>
+                  <a href="#">
+                    <Instagram />
+                  </a>
+                </SocialRow>
               </li>
             </MenuList>
           </div>
