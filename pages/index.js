@@ -106,7 +106,7 @@ const FlexGrid = styled.div`
   display: flex;
   flex-wrap: wrap;
   & > div {
-    background-color: ${(props) => props.theme.brandBlue};
+    background-color: ${(props) => props.theme.text};
     display: flex;
     position: relative;
     height: 309px;

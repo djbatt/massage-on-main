@@ -337,9 +337,9 @@ function footer(props) {
             <Hours>MON-FRI: 9AM - 10PM</Hours>
             <Hours>SAT-SUN: 10AM - 7PM</Hours>
           </div>
-          <div>
+          <div style={{minHeight: "300px"}}>
             <GoogleMapReact
-              bootstrapURLKeys={"AIzaSyCLo1g8znFtrQg-UovgeyOxIH4ZqzkddHI"}
+              bootstrapURLKeys={{ key: "AIzaSyCLo1g8znFtrQg-UovgeyOxIH4ZqzkddHI" }}
               defaultCenter={mapData.center}
               defaultZoom={mapData.zoom}
               options={createMapOptions}
