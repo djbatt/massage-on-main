@@ -5,7 +5,7 @@ const QUERY = `query {
     pageTitle
     summary(markdown: true)
     banner {
-      responsiveImage {
+      responsiveImage(imgixParams: {w: "2000"}) {
         alt
         src
         srcSet
@@ -18,7 +18,7 @@ const QUERY = `query {
       tag
     }
     serviceOne {
-      responsiveImage {
+      responsiveImage(imgixParams: {w: "500"}) {
         alt
         src
         srcSet
@@ -27,7 +27,7 @@ const QUERY = `query {
       }
     }
     serviceTwo {
-      responsiveImage {
+      responsiveImage(imgixParams: {w: "500"}) {
         alt
         src
         srcSet
@@ -36,7 +36,7 @@ const QUERY = `query {
       }
     }
     serviceThree {
-      responsiveImage {
+      responsiveImage(imgixParams: {w: "500"}) {
         alt
         src
         srcSet
@@ -57,7 +57,6 @@ const QUERY = `query {
     responsiveImage {
       alt
       src
-      srcSet
       title
     }
   }
@@ -99,6 +98,7 @@ const BannerCard = styled.div`
 
 const BannerText = styled.h1`
   font-size: 22px;
+  margin-top: 14px;
   text-align: center;
 `;
 

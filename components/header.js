@@ -148,18 +148,6 @@ function header(props) {
               <Link href="/about">About</Link>
             </li>
             <li>
-              <Link href="/common-questions">Common Questions</Link>
-            </li>
-            <li>
-              <Link href="/contact">Contact</Link>
-            </li>
-            <li>
-              <Link href="/gift-cards">Gift Cards</Link>
-            </li>
-            <li>
-              <Link href="/contact">Services</Link>
-            </li>
-            <li>
               <BookingButton
                 href="https://square.site/book/LH466QXPEW2KV/massage-on-main-llc-richmond-va"
                 target="_blank"

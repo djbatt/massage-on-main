@@ -1,12 +1,3 @@
-import { request } from "../lib/datocms";
-import { Image, renderMetaTags } from "react-datocms";
-import parse from "html-react-parser";
-import Head from "next/head";
-
-//Components
-import Header from "../components/header";
-import Banner from '../components/banner';
-
 const QUERY = `query {
   page(filter: {id: {eq: "21725847"}}) {
     bannerText
@@ -14,7 +5,7 @@ const QUERY = `query {
     pageTitle
     summary(markdown: true)
     banner {
-      responsiveImage {
+      responsiveImage(imgixParams: {w: "2000"}) {
         alt
         src
         srcSet
@@ -34,14 +25,54 @@ const QUERY = `query {
       tag
     }
   }
-  upload(filter: {id: {eq: "8642857"}}) {
+  allUploads(filter: {id: {in: ["8642857", "10631945"]}}) {
+    id
     responsiveImage {
       alt
       src
       srcSet
+      title
     }
   }
 }
+
+`;
+
+import { request } from "../lib/datocms";
+import { renderMetaTags } from "react-datocms";
+import parse from "html-react-parser";
+import Head from "next/head";
+import styled from "styled-components";
+
+//Components
+import Header from "../components/header";
+import Banner from "../components/banner";
+import Footer from "../components/footer";
+
+const Container = styled.div`
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+`;
+
+const BannerCard = styled.div`
+  background-color: ${(props) => props.theme.brandBlue};
+  padding: 20px;
+  margin-top: -80px;
+  display: flex;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  position: relative;
+  color: ${(props) => props.theme.background};
+  justify-content: center;
+  flex-direction: row;
+`;
+
+const BannerText = styled.h1`
+  font-size: 22px;
+  margin-top: 14px;
+  text-align: center;
 `;
 
 function Page({ data }) {
@@ -50,17 +81,26 @@ function Page({ data }) {
     <>
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="stylesheet" href="https://use.typekit.net/zvd5hlr.css"></link>
+        <link
+          rel="stylesheet"
+          href="https://use.typekit.net/zvd5hlr.css"
+        ></link>
         {renderMetaTags(data.page.seo.concat(data.site.favicon))}
       </Head>
 
-      <Header logo={data.upload.responsiveImage}/>
+      <Header logo={data.allUploads.filter(upload => upload.id === "8642857")[0].responsiveImage} />
 
       <main>
         <Banner data={data.page.banner.responsiveImage} />
-        <h1>{data.page.bannerText}</h1>
-        {parse(data.page.summary)}
+        <Container>
+          <BannerCard>
+            <BannerText className="trajan">{data.page.bannerText}</BannerText>
+          </BannerCard>
+          <h1>{data.page.pageTitle}</h1>
+          {parse(data.page.summary)}
+        </Container>
       </main>
+      <Footer logo={data.allUploads.filter(upload => upload.id === "10631945")[0].responsiveImage} />
     </>
   );
 }
@@ -71,6 +111,7 @@ export async function getServerSideProps() {
     query: QUERY,
     variables: { limit: 10 },
   });
+
 
   // Pass data to the page via props
   return { props: { data } };

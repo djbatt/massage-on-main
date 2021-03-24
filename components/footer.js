@@ -303,23 +303,11 @@ function footer(props) {
                 <Link href="/about">About</Link>
               </li>
               <li>
-                <Link href="/common-questions">Common Questions</Link>
-              </li>
-              <li>
-                <Link href="/contact">Contact</Link>
-              </li>
-              <li>
-                <Link href="/gift-cards">Gift Cards</Link>
-              </li>
-              <li>
-                <Link href="/contact">Services</Link>
-              </li>
-              <li>
                 <SocialRow>
-                  <a href="#">
+                  <a href="https://www.facebook.com/massageonmainrva" rel="noopener" target="_blank">
                     <FacebookSquare />
                   </a>
-                  <a href="#">
+                  <a href="https://www.instagram.com/massageonmainrva/" rel="noopener" target="_blank">
                     <Instagram />
                   </a>
                 </SocialRow>
