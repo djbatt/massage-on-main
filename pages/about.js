@@ -86,9 +86,31 @@ function Page({ data }) {
           href="https://use.typekit.net/zvd5hlr.css"
         ></link>
         {renderMetaTags(data.page.seo.concat(data.site.favicon))}
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=UA-189688387-1`}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+
+                    gtag('config', 'UA-189688387-1', {
+                      page_path: window.location.pathname,
+                    });
+                  `,
+          }}
+        />
       </Head>
 
-      <Header logo={data.allUploads.filter(upload => upload.id === "8642857")[0].responsiveImage} />
+      <Header
+        logo={
+          data.allUploads.filter((upload) => upload.id === "8642857")[0]
+            .responsiveImage
+        }
+      />
 
       <main>
         <Banner data={data.page.banner.responsiveImage} />
@@ -100,7 +122,12 @@ function Page({ data }) {
           {parse(data.page.summary)}
         </Container>
       </main>
-      <Footer logo={data.allUploads.filter(upload => upload.id === "10631945")[0].responsiveImage} />
+      <Footer
+        logo={
+          data.allUploads.filter((upload) => upload.id === "10631945")[0]
+            .responsiveImage
+        }
+      />
     </>
   );
 }
@@ -111,7 +138,6 @@ export async function getServerSideProps() {
     query: QUERY,
     variables: { limit: 10 },
   });
-
 
   // Pass data to the page via props
   return { props: { data } };
