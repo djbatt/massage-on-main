@@ -44,6 +44,17 @@ const BookingButton = styled.a`
   background-color: ${(props) => props.theme.brandBlue};
 `;
 
+const PhoneButton = styled.a`
+  padding: 12px;
+  border-radius: 4px;
+  color: ${(props) => props.theme.text};
+  background-color: ${(props) => props.theme.background};
+  border: 1px solid ${(props) => props.theme.text};
+  @media only screen and (max-width: 992px) {
+    margin-top: 12px;
+  }
+`;
+
 const Nav = styled.nav`
   flex-direction: column;
   justify-content: center;
@@ -84,6 +95,10 @@ const MenuList = styled.ul`
       margin-bottom: 12px;
       margin-left: 0px;
       flex-direction: column;
+      height: fit-content;
+      &:last-of-type {
+        margin-top: 28px;
+      }
     }
   }
 `;
@@ -148,6 +163,9 @@ function header(props) {
               <Link href="/about">About</Link>
             </li>
             <li>
+              <Link href="/services">Services</Link>
+            </li>
+            <li>
               <BookingButton
                 href="https://square.site/book/LH466QXPEW2KV/massage-on-main-llc-richmond-va"
                 target="_blank"
@@ -155,12 +173,17 @@ function header(props) {
                 Booking
               </BookingButton>
             </li>
+            <li>
+              <PhoneButton
+                href="tel:+18044242607"
+                target="_blank"
+              >
+                (804) 424-2607
+              </PhoneButton>
+            </li>
           </MenuList>
           <ContactInfo>
             <Spacer />
-            <li>
-              <a href="tel:+18044242607">(804) 424-2607</a>
-            </li>
             <li>
               <span>Anthony@massageonmainrva.com</span>
             </li>

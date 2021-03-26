@@ -1,75 +1,75 @@
 const QUERY = `query {
-  page(filter: {id: {eq: "21725734"}}) {
-    bannerText
-    id
-    pageTitle
-    summary(markdown: true)
-    banner {
-      responsiveImage(imgixParams: {w: "2000"}) {
-        alt
-        src
-        srcSet
-        base64
+    page(filter: {id: {eq: "25650446"}}) {
+      bannerText
+      id
+      pageTitle
+      summary(markdown: true)
+      banner {
+        responsiveImage(imgixParams: {w: "2000"}) {
+          alt
+          src
+          srcSet
+          base64
+        }
+      }
+      seo: _seoMetaTags {
+        attributes
+        content
+        tag
+      }
+      serviceOne {
+        responsiveImage(imgixParams: {w: "500"}) {
+          alt
+          src
+          srcSet
+          base64
+          title
+        }
+      }
+      serviceTwo {
+        responsiveImage(imgixParams: {w: "500"}) {
+          alt
+          src
+          srcSet
+          base64
+          title
+        }
+      }
+      serviceThree {
+        responsiveImage(imgixParams: {w: "500"}) {
+          alt
+          src
+          srcSet
+          base64
+          title
+        }
       }
     }
-    seo: _seoMetaTags {
-      attributes
-      content
-      tag
-    }
-    serviceOne {
-      responsiveImage(imgixParams: {w: "500"}) {
-        alt
-        src
-        srcSet
-        base64
-        title
+    site: _site {
+      favicon: faviconMetaTags {
+        attributes
+        content
+        tag
       }
     }
-    serviceTwo {
-      responsiveImage(imgixParams: {w: "500"}) {
+    allUploads(filter: {id: {in: ["8642857", "10631945"]}}) {
+      id
+      responsiveImage {
         alt
         src
-        srcSet
-        base64
-        title
-      }
-    }
-    serviceThree {
-      responsiveImage(imgixParams: {w: "500"}) {
-        alt
-        src
-        srcSet
-        base64
         title
       }
     }
   }
-  site: _site {
-    favicon: faviconMetaTags {
-      attributes
-      content
-      tag
-    }
-  }
-  allUploads(filter: {id: {in: ["8642857", "10631945"]}}) {
-    id
-    responsiveImage {
-      alt
-      src
-      title
-    }
-  }
-}
-
-`;
+  
+  `;
 
 import { request } from "../lib/datocms";
 import { renderMetaTags } from "react-datocms";
 import parse from "html-react-parser";
 import Head from "next/head";
-import Link from "next/link";
 import styled from "styled-components";
+import Link from "next/link";
 import React from "react";
 
 //Components
@@ -130,21 +130,15 @@ const ServiceTitle = styled.span`
 `;
 
 function Page({ data }) {
-  const ServiceLink = React.forwardRef(
-    ({ onClick, href, image, title }, ref) => {
-      return (
-        <a
-          href={href}
-          onClick={onClick}
-          ref={ref}
-          style={{ display: "flex", width: "100%" }}
-        >
-          <ServiceCard data={image} />
-          <ServiceTitle className="trajan">{title}</ServiceTitle>
-        </a>
-      );
-    }
-  );
+
+  const ServiceLink = React.forwardRef(({ onClick, href, image, title }, ref) => {
+    return (
+      <a href={href} onClick={onClick} ref={ref} style={{display: "flex", width: "100%"}}>
+        <ServiceCard data={image} />
+        <ServiceTitle className="trajan">{title}</ServiceTitle>
+      </a>
+    );
+  });
   // Render data...
   return (
     <>
@@ -162,14 +156,14 @@ function Page({ data }) {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-
-                    gtag('config', 'UA-189688387-1', {
-                      page_path: window.location.pathname,
-                    });
-                  `,
+                      window.dataLayer = window.dataLayer || [];
+                      function gtag(){dataLayer.push(arguments);}
+                      gtag('js', new Date());
+  
+                      gtag('config', 'UA-189688387-1', {
+                        page_path: window.location.pathname,
+                      });
+                    `,
           }}
         />
       </Head>
@@ -187,30 +181,22 @@ function Page({ data }) {
           <BannerCard>
             <BannerText className="trajan">{data.page.bannerText}</BannerText>
           </BannerCard>
+          <h1>{data.page.pageTitle}</h1>
           {parse(data.page.summary)}
           <FlexGrid>
             <div>
               <Link href="/services/swedish-massage" passHref>
-                <ServiceLink
-                  title={data.page.serviceOne.responsiveImage.title}
-                  image={data.page.serviceOne.responsiveImage}
-                />
+                <ServiceLink title={data.page.serviceOne.responsiveImage.title} image={data.page.serviceOne.responsiveImage}/>
               </Link>
             </div>
             <div>
               <Link href="/services/therapeutic-massage" passHref>
-                <ServiceLink
-                  title={data.page.serviceTwo.responsiveImage.title}
-                  image={data.page.serviceTwo.responsiveImage}
-                />
+                <ServiceLink title={data.page.serviceTwo.responsiveImage.title} image={data.page.serviceTwo.responsiveImage}/>
               </Link>
             </div>
             <div>
               <Link href="/services/sports-massage" passHref>
-                <ServiceLink
-                  title={data.page.serviceThree.responsiveImage.title}
-                  image={data.page.serviceThree.responsiveImage}
-                />
+                <ServiceLink title={data.page.serviceThree.responsiveImage.title} image={data.page.serviceThree.responsiveImage}/>
               </Link>
             </div>
           </FlexGrid>

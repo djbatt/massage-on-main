@@ -303,6 +303,9 @@ function footer(props) {
                 <Link href="/about">About</Link>
               </li>
               <li>
+                <Link href="/services">Services</Link>
+              </li>
+              <li>
                 <SocialRow>
                   <a href="https://www.facebook.com/massageonmainrva" rel="noopener" target="_blank">
                     <FacebookSquare />
@@ -325,7 +328,7 @@ function footer(props) {
             <Hours>MON-FRI: 9AM - 10PM</Hours>
             <Hours>SAT-SUN: 10AM - 7PM</Hours>
           </div>
-          <div style={{minHeight: "300px"}}>
+          <div style={{height: "300px"}}>
             <GoogleMapReact
               bootstrapURLKeys={{ key: "AIzaSyCLo1g8znFtrQg-UovgeyOxIH4ZqzkddHI" }}
               defaultCenter={mapData.center}
