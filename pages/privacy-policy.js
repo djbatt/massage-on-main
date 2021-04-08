@@ -1,5 +1,5 @@
 const QUERY = `query {
-    page(filter: {id: {eq: "25651733"}}) {
+    page(filter: {id: {eq: "26065270"}}) {
       bannerText
       id
       pageTitle
@@ -44,15 +44,15 @@ import Head from "next/head";
 import parse from "html-react-parser";
 
 //CMS
-import { request } from "../../lib/datocms";
-import { renderMetaTags } from "react-datocms";
+import { request } from "../lib/datocms";
+import { renderMetaTags, Image } from "react-datocms";
 
 //Components
-import Footer from "../../components/footer";
-import Header from "../../components/header";
-import Banner from "../../components/banner";
-import Container from "../../components/container";
-import Content from "../../components/content";
+import Footer from "../components/footer";
+import Header from "../components/header";
+import Banner from "../components/banner";
+import Container from "../components/container";
+import Content from "../components/content";
 
 const BannerCard = styled.div`
   background-color: ${(props) => props.theme.colors.brandBlue};
@@ -74,68 +74,8 @@ const BannerText = styled.h1`
   text-align: center;
 `;
 
-const Grid = styled.div`
-  display: grid;
-
-  & > div {
-    background-color: ${(props) => props.theme.colors.text};
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    position: relative;
-    width: 100%;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  }
-
-  .price-item-1 {
-    grid-area: a;
-  }
-
-  .price-item-2 {
-    grid-area: b;
-  }
-
-  .price-item-3 {
-    grid-area: c;
-  }
-
-  row-gap: 16px;
-  column-gap: 16px;
-  grid-template-rows: auto;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-areas: "a b c";
-
-  @media only screen and (max-width: 880px) {
-    grid-template-rows: auto auto;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "a b"
-      "c c";
-  }
-
-  @media only screen and (max-width: 560px) {
-    grid-template-rows: auto auto auto;
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "a"
-      "b"
-      "c";
-  }
-`;
-
-const PriceCard = styled.div`
-  display: flex;
-  background-color: ${(props) => props.theme.colors.brandBlue};
-  & > span {
-    color: ${(props) => props.theme.colors.background};
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-`;
-
 export default function Page({ data }) {
+
   return (
     <>
       <Head>
@@ -158,23 +98,6 @@ export default function Page({ data }) {
             <h1>{data.page.pageTitle}</h1>
             {parse(data.page.summary)}
           </Content>
-          <Grid>
-            <div className="price-item-1">
-              <PriceCard>
-                <span className="trajan">30 Minutes - $50</span>
-              </PriceCard>
-            </div>
-            <div className="price-item-2">
-              <PriceCard>
-                <span className="trajan">60 Minutes - $80</span>
-              </PriceCard>
-            </div>
-            <div className="price-item-3">
-              <PriceCard>
-                <span className="trajan">90 Minutes - $120</span>
-              </PriceCard>
-            </div>
-          </Grid>
         </Container>
       </main>
       <Footer />
