@@ -2,7 +2,7 @@ import { Image } from "react-datocms";
 import styled from "styled-components";
 
 const Service = styled(Image)`
-    height: 309px;
+    height: 300px;
     object-fit: cover;
     opacity: .5;
     position: absolute!important;

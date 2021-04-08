@@ -54,46 +54,41 @@ const QUERY = `query {
   }
   allUploads(filter: {id: {in: ["8642857", "10631945"]}}) {
     id
-    responsiveImage {
+    responsiveImage(imgixParams: {w: "500"}) {
       alt
       src
       title
     }
   }
 }
-
 `;
 
-import { request } from "../lib/datocms";
-import { renderMetaTags } from "react-datocms";
-import parse from "html-react-parser";
+import React from "react";
+import styled from "styled-components";
 import Head from "next/head";
 import Link from "next/link";
-import styled from "styled-components";
-import React from "react";
+import parse from "html-react-parser";
+
+//CMS
+import { request } from "../lib/datocms";
+import { renderMetaTags, Image } from "react-datocms";
 
 //Components
+import Footer from "../components/footer";
 import Header from "../components/header";
 import Banner from "../components/banner";
-import ServiceCard from "../components/serviceCard";
-import Footer from "../components/footer";
-
-const Container = styled.div`
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 20px;
-`;
+import Container from "../components/container";
+import Content from "../components/content";
 
 const BannerCard = styled.div`
-  background-color: ${(props) => props.theme.brandBlue};
+  background-color: ${(props) => props.theme.colors.brandBlue};
   padding: 20px;
   margin-top: -80px;
   display: flex;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   z-index: 1;
   position: relative;
-  color: ${(props) => props.theme.background};
+  color: ${(props) => props.theme.colors.background};
   justify-content: center;
   flex-direction: row;
 `;
@@ -101,35 +96,83 @@ const BannerCard = styled.div`
 const BannerText = styled.h1`
   font-size: 22px;
   margin-top: 14px;
+  margin-bottom: 14px;
   text-align: center;
 `;
 
-const FlexGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+const Grid = styled.div`
+  display: grid;
+
   & > div {
-    background-color: ${(props) => props.theme.text};
+    background-color: ${(props) => props.theme.colors.text};
     display: flex;
-    position: relative;
-    height: 309px;
+    flex-direction: column;
     flex: 1;
-    min-width: 300px;
-    margin-left: 8px;
-    margin-right: 8px;
-    margin-bottom: 16px;
+    position: relative;
+    width: 100%;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+
+  .service-item-1 {
+    grid-area: a;
+  }
+
+  .service-item-2 {
+    grid-area: b;
+  }
+
+  .service-item-3 {
+    grid-area: c;
+  }
+
+  row-gap: 16px;
+  column-gap: 16px;
+  grid-template-rows: 300px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "a b c";
+
+  @media only screen and (max-width: 880px) {
+    grid-template-rows: 300px 300px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "a b"
+      "c c";
+  }
+
+  @media only screen and (max-width: 560px) {
+    grid-template-rows: 300px 300px 300px;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "a"
+      "b"
+      "c";
+  }
+`;
+
+const ServiceCard = styled(Image)`
+  height: 300px;
+  object-fit: cover;
+  opacity: 0.5;
+  position: absolute !important;
+  width: 100%;
+  > picture > img {
+    position: absolute;
+    opacity: 0.5;
+    object-fit: cover;
   }
 `;
 
 const ServiceTitle = styled.span`
-  color: ${(props) => props.theme.background};
-  text-align: center;
+  color: ${(props) => props.theme.colors.background};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   z-index: 1;
   position: relative;
   margin: auto;
 `;
 
-function Page({ data }) {
+export default function Page({ data }) {
   const ServiceLink = React.forwardRef(
     ({ onClick, href, image, title }, ref) => {
       return (
@@ -137,7 +180,7 @@ function Page({ data }) {
           href={href}
           onClick={onClick}
           ref={ref}
-          style={{ display: "flex", width: "100%" }}
+          style={{ display: "flex", width: "100%", height: "100%" }}
         >
           <ServiceCard data={image} />
           <ServiceTitle className="trajan">{title}</ServiceTitle>
@@ -145,51 +188,28 @@ function Page({ data }) {
       );
     }
   );
-  // Render data...
+
   return (
     <>
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link
-          rel="stylesheet"
-          href="https://use.typekit.net/zvd5hlr.css"
-        ></link>
         {renderMetaTags(data.page.seo.concat(data.site.favicon))}
-        <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=UA-189688387-1`}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-
-                    gtag('config', 'UA-189688387-1', {
-                      page_path: window.location.pathname,
-                    });
-                  `,
-          }}
-        />
       </Head>
-
       <Header
         logo={
           data.allUploads.filter((upload) => upload.id === "8642857")[0]
             .responsiveImage
         }
       />
-
       <main>
         <Banner data={data.page.banner.responsiveImage} />
         <Container>
           <BannerCard>
             <BannerText className="trajan">{data.page.bannerText}</BannerText>
           </BannerCard>
-          {parse(data.page.summary)}
-          <FlexGrid>
-            <div>
+          <Content>{parse(data.page.summary)}</Content>
+          <Grid>
+            <div className="service-item-1">
               <Link href="/services/swedish-massage" passHref>
                 <ServiceLink
                   title={data.page.serviceOne.responsiveImage.title}
@@ -197,7 +217,7 @@ function Page({ data }) {
                 />
               </Link>
             </div>
-            <div>
+            <div className="service-item-2">
               <Link href="/services/therapeutic-massage" passHref>
                 <ServiceLink
                   title={data.page.serviceTwo.responsiveImage.title}
@@ -205,7 +225,7 @@ function Page({ data }) {
                 />
               </Link>
             </div>
-            <div>
+            <div className="service-item-3">
               <Link href="/services/sports-massage" passHref>
                 <ServiceLink
                   title={data.page.serviceThree.responsiveImage.title}
@@ -213,15 +233,10 @@ function Page({ data }) {
                 />
               </Link>
             </div>
-          </FlexGrid>
+          </Grid>
         </Container>
       </main>
-      <Footer
-        logo={
-          data.allUploads.filter((upload) => upload.id === "10631945")[0]
-            .responsiveImage
-        }
-      />
+      <Footer />
     </>
   );
 }
@@ -236,5 +251,3 @@ export async function getServerSideProps() {
   // Pass data to the page via props
   return { props: { data } };
 }
-
-export default Page;
