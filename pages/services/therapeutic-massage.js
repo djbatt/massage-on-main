@@ -117,29 +117,11 @@ function Page({ data }) {
   return (
     <>
       <Head>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link
-          rel="stylesheet"
-          href="https://use.typekit.net/zvd5hlr.css"
-        ></link>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
         {renderMetaTags(data.page.seo.concat(data.site.favicon))}
-        <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=UA-189688387-1`}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-                      window.dataLayer = window.dataLayer || [];
-                      function gtag(){dataLayer.push(arguments);}
-                      gtag('js', new Date());
-  
-                      gtag('config', 'UA-189688387-1', {
-                        page_path: window.location.pathname,
-                      });
-                    `,
-          }}
-        />
       </Head>
 
       <Header
