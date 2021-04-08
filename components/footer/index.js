@@ -110,14 +110,14 @@ function footer() {
                 <div style={{ display: "flex" }}>
                   <a
                     href="https://www.facebook.com/massageonmainrva"
-                    rel="noopener"
+                    rel="noopener noreferrer"
                     target="_blank"
                   >
                     <Fb />
                   </a>
                   <a
                     href="https://www.instagram.com/massageonmainrva/"
-                    rel="noopener"
+                    rel="noopener noreferrer"
                     target="_blank"
                   >
                     <Insta />
